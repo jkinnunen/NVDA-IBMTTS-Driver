@@ -46,7 +46,7 @@ english_fixes = {
 	#Don't break UK formatted dates.
 	re.compile(br"\b(\d+)  (January|February|March|April|May|June|July|August|September|October|November|December)\b"): br"\1 \2",
 	#Crash words, formerly part of anticrash_res.
-	re.compile(br'\b(.*?)c(ae|\xe6)sur(e)?', re.I): br'\1seizur',
+	re.compile(br'c(ae|\xe6)sur(e)?', re.I): br'seizur',
 	re.compile(br"\b(|\d+|\W+)h'(r|v)[e]", re.I): br"\1h \2e",
 	re.compile(br"\b(\w+[bdfhjlmnqrvyz])(h[he]s)([abcdefghjklmnopqrstvwy]\w+)\b", re.I): br"\1 \2\3",
 	re.compile(br"\b(\w+[bdfhjlmnqrvz])(h[he]s)(iron+[degins]?)", re.I): br"\1 \2\3",
@@ -75,7 +75,7 @@ english_ibm_fixes = {
 	#Mostly duplicates english_fixes, but removes unneded replacements.
 	#This won't crash, but ViaVoice doesn't like spaces in Mc names.
 	re.compile(br"\b(Mc)\s+([A-Z][a-z]|[A-Z][A-Z]+)"): br"\1\2",
-	re.compile(br'\b(.*?)c(ae|\xe6)sur(e)?', re.I): br'\1seizur',
+	re.compile(br'c(ae|\xe6)sur(e)?', re.I): br'seizur',
 	re.compile(br"\b(|\d+|\W+)h'(r|v)[e]", re.I): br"\1h \2e",
 	re.compile(br"\b(\w+[bdfhjlmnqrvyz])(h[he]s)([abcdefghjklmnopqrstvwy]\w+)\b", re.I): br"\1 \2\3",
 	re.compile(br"\b(\w+[bdfhjlmnqrvyz])(h[he]s)(iron+[degins]?)", re.I): br"\1 \2\3",
