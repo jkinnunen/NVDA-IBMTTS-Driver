@@ -1,4 +1,11 @@
 # version 26.5.1
+* Fixed #147: handle invalid IBMTTS language settings in NVDA: Some IBMTTS configurations may contain an invalid IBMTTS language value, causing the engine to fail to load. This change adds `check_lang_param()` to validate the configured language and apply a fallback when needed:
+  1. Use the default language matching the user's locale.
+  2. If unavailable, use english, and if unavailable, use the first available language in avLangs.
+* Avoid invalid INI paths for those libs using a eci.ini file:
+Previously, the INI file was updated only when the configured path was relative. However, some eci.ini files may contain an incorrect absolute path. This change also validates absolute paths and updates them when necessary.
+If NVDA cannot write to the INI file, the path cannot be corrected and the IBMTTS synth may fail to work.
+* fixed 148: avoid to close the 32 bits process if it's already closed when NVDA is closing the synth. E.G. When the computer is shuting down.
 * Restored support for NVDA 2019.3. This fixes issue #151.
 * Updated Turkish translations.
 * Simplified German anticrash expression, removing the second one for macro, fixing macro - enabled by folding it into the existing expression for audio and video. Fixes #144.

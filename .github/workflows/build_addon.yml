@@ -43,7 +43,7 @@ jobs:
           URL=$(curl -s https://api.github.com/repos/davidacm/ibmtts-host32-bridge/releases/latest \
             | grep "browser_download_url.*ibmtts_host32.dll" \
             | cut -d : -f 2,3 \
-            | tr -d \"[:space:])
+            | tr -d '"[:space:]')
           
           # download the file directly to the driver folder
           mkdir -p addon/synthDrivers
