@@ -185,7 +185,7 @@ def copyFiles(src, dest):
 		if curSourceDir == src:
 			curDestDir=dest
 		else:
-			curDestDir=path.join(dest,path.relpath(curSourceDir, dest))
+			curDestDir=path.join(dest,path.relpath(curSourceDir, src))
 		if not path.isdir(curDestDir):
 			os.makedirs(curDestDir)
 		for f in files:
@@ -202,7 +202,8 @@ def guiCopiFiles(src, dest, title, msg):
 		try:
 			ExecAndPump(copyFiles, src, dest)
 			break
-		except:
+		except Exception as e:
+			log.info(f"Error copying files from {src} to {dest}", exc_info=True)
 			# Translators: a message dialog asking to retry or cancel when copying files.
 			message=_("Unable to copy a file. Perhaps it is currently being used by another process or you have run out of disc space on the drive you are copying to.")
 			# Translators: the title of a retry cancel dialog when copying files.

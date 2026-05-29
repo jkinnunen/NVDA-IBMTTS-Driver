@@ -103,20 +103,24 @@ class IBMTTSSettingsPanel(SettingsPanel):
 					break
 
 	def _onSetLocalClick(self, evt):
+		src = self._ttsPath.GetValue()
+		if src == "ibmtts":
+			gui.messageBox(
+				# Translators: The message displayed when the IBMTTS files are already in the add-on folder.
+				_("IBMTTS files are already in the add-on folder. Source and destination paths are the same. No need to copy them again."),
+				# Translators: The title displayed when the IBMTTS files are already in the add-on folder.
+				_("No need to copy"), wx.OK|wx.ICON_INFORMATION,self
+			)
 		# Translators: A message to ask the user to copy IBMTTS files to Add-on folder.
 		if gui.messageBox(
-			_('''Are you sure to copy IBMTTS files to local NVDA installation and register a new add-on called "eciLibraries" to store the libraries? It may not work in some IBMTTS distributions.
-		Note: after it, if you want to uninstall this add-on, you'll need to uninstall two add-ons in order to  delete IBMTTS files completelly from NVDA. This one and "eciLibraries"'''),
+			_('''Are you sure you want to copy IBMTTS files to the local NVDA IBMTTS addon? It may not work in some IBMTTS distributions.'''),
 			# Translators: The title of the Asking dialog displayed when trying to copy IBMTTS files.
 			_("Copy IBMTTS files"),
 			wx.YES|wx.NO|wx.ICON_QUESTION, self
 		) == wx.YES:
-			src = self._ttsPath.GetValue()
-			if src == "ibmtts":
-				src = r"..\synthDrivers\ibmtts"
 			if not path.isabs(src):
 				src = path.abspath(path.join(path.abspath(path.dirname(__file__)), src))
-			dest = path.abspath(path.join(path.abspath(path.dirname(__file__)), r"..\..\eciLibraries"))
+			dest = path.abspath(path.join(path.abspath(path.dirname(__file__)), r"..\synthDrivers\ibmtts"))
 			if src == dest:
 				# Translators: The message displayed when copying IBMTTS files and the paths are the same.
 				gui.messageBox(
@@ -135,9 +139,8 @@ class IBMTTSSettingsPanel(SettingsPanel):
 				# Translators: The message displayed while IBMTTS files are being copied.
 				_("Please wait while IBMTTS files  are copied into add-on.")
 			):
-				self.createLibrariesManifest(dest)
 				# this parameter is saved even if the user doesn't click accept button.
-				appConfig.TTSPath = r"..\..\eciLibraries"
+				appConfig.TTSPath = r"ibmtts"
 				self._ttsPath.SetValue(appConfig.TTSPath)
 				# Translators: The message displayed when copying IBMTTS files to Add-on was successful.
 				gui.messageBox(
@@ -151,18 +154,6 @@ class IBMTTSSettingsPanel(SettingsPanel):
 			else:
 				# Translators: The message displayed when errors were found while trying to copy IBMTTS files to Add-on.
 				gui.messageBox(_("Error copying IBMTTS files"), _("Error"), wx.OK|wx.ICON_ERROR, self)
-
-	def createLibrariesManifest(self, dest):
-		with open(path.join(dest, "manifest.ini"), "w") as f:
-			f.write('''name = eciLibraries
-summary = IBMTTS libraries
-description = """You can put the libraries for IBMTTS driver here."""
-author = NVDA User
-version = 0.1
-url = None
-minimumNVDAVersion = 2012.1.1
-lastTestedNVDAVersion = 2030.1.1
-updateChannel = None''')
 
 	def onSave(self):
 		appConfig.autoUpdate = self._autoCheck.GetValue()
