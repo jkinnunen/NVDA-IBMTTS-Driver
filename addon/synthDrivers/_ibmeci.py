@@ -366,7 +366,7 @@ def eciNew():
 		eci.eciGetAvailableLanguages(0,byref(b))
 		avLangs=(c_int*b.value)()
 		eci.eciGetAvailableLanguages(byref(avLangs),byref(b))
-	if 'voice' in conf['speech']['ibmeci']:
+	if conf.get('speech', {}).get('ibmeci', {}).get('voice'):
 		lang = int(conf['speech']['ibmeci']['voice'])
 	else:
 		lang = getVoiceByLanguage(languageHandler.getLanguage())[0]

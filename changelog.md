@@ -1,3 +1,13 @@
+# version 26.6.1
+
+* FIX: Corrected relative path logic in os.walk to prevent crashes when copying subfolders.
+* Remove the creation of the 'eciLibraries' add-on; it is no longer needed since the update process of IBMTTS properly preserves these files.
+* Update file copy destination to the 'ibmtts' folder inside 'synthDrivers' of the add-on. 
+* i18n: Updated translation template.
+* updated Spanish strings.
+* Fixed #154: When the issue #147 was fixed, it introduced a new bug, that don't allow the driver to run on  NVDA if the driver has not been run before. The cause is, the 'ibmeci' key does not exist in that situation.
+It's a serious problem, so the release was launched quickly. If you're runing IBMTTS, won't be affected, This only happens when IBMTTS has not run before.
+
 # version 26.5.1
 * Fixed #147: handle invalid IBMTTS language settings in NVDA: Some IBMTTS configurations may contain an invalid IBMTTS language value, causing the engine to fail to load. This change adds `check_lang_param()` to validate the configured language and apply a fallback when needed:
   1. Use the default language matching the user's locale.
