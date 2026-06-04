@@ -1,3 +1,7 @@
+# version 26.6.2
+
+Version 26.6.1 introduced a big issue when solving #148. In some cases, The antivirus detected the bridge as a false positive because the intermediary process between 64 and 32 bits tried to remain active during the shutdown processes, until NVDA was closed, and not before.
+
 # version 26.6.1
 
 * FIX: Corrected relative path logic in os.walk to prevent crashes when copying subfolders.
